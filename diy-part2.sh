@@ -10,7 +10,5 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
-git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
-
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.0.3/g' package/base-files/files/bin/config_generate
