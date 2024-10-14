@@ -12,7 +12,7 @@
  
  
  ######################修改feeds.conf.default文件###########################
-git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
+echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 #git clone https://github.com/haiibo/openwrt-packages package/openwrt-packages
 cat feeds.conf.default
 
