@@ -27,7 +27,7 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: nanopineo2.config				  
-  DIY_P1_SH: diy-part1.sh
+  #DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
@@ -64,6 +64,25 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        
+     - name: Clone source code
+      run: |
+        git clone https://github.com/coolsnowwolf/lede lede
+        
+        ##修改lede目录中的feeds.conf.default文件，把第5行的 # 去掉。
+       # cd lede
+       # sed -i '5s/#//' feeds.conf.default
+        
+   
+   ##***************************************************************************  
+    ##下载kenzok8/openwrt-packages的源代码 和 passwall依赖库kenzok8/small.git。
+    - name: Clone openwrt-packages code and small code
+      run: |
+        cd lede
+        sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
+        sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
+        
+  ##****************************************************************************  
 
     - name: Load custom feeds
       run: |
@@ -71,8 +90,6 @@ jobs:
         #chmod +x $DIY_P1_SH
         cd openwrt
         #$GITHUB_WORKSPACE/$DIY_P1_SH
-        rm -rf feeds/packages/lang/golang
-        git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a #&& rm -rf ./feeds/packages/lang/ruby && cp -r ./ruby ./feeds/packages/lang && cat ./feeds/packages/lang/ruby/Makefile
