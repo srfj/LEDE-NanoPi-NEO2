@@ -65,8 +65,6 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         
-     - name: Clone source code
-      run: |
         git clone https://github.com/coolsnowwolf/lede lede
         
         ##修改lede目录中的feeds.conf.default文件，把第5行的 # 去掉。
